@@ -15,7 +15,7 @@ _global_script_class_icons={
 [application]
 
 config/name="chart-gd"
-run/main_scene="res://example/example.tscn"
+run/main_scene="res://addon_ChartGraph_Examples/example.tscn"
 config/icon="res://icon.png"
 
 [display]
