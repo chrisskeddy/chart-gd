@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://example/example.gd" type="Script" id=1]
-[ext_resource path="res://addons/GDCharts/script.gd" type="Script" id=2]
-[ext_resource path="res://addons/GDCharts/icon.png" type="Texture" id=3]
+[ext_resource path="res://addons/ChartGraph/script.gd" type="Script" id=2]
+[ext_resource path="res://addons/ChartGraph/icon.png" type="Texture" id=3]
 [ext_resource path="res://assets/THSarabunNew.tres" type="DynamicFont" id=4]
 [ext_resource path="res://example/decorationGroup.tres" type="ButtonGroup" id=5]
 [ext_resource path="res://example/chartType.tres" type="ButtonGroup" id=6]
