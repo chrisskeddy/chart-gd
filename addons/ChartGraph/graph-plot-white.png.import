@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/graph-plot-white.png-b2db87f2374c8f05649a10994a5a9092.stex"
+path="res://.import/graph-plot-white.png-6f00476f60ac6a862f4ec7e6910136fe.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/GDCharts/graph-plot-white.png"
-dest_files=[ "res://.import/graph-plot-white.png-b2db87f2374c8f05649a10994a5a9092.stex" ]
+source_file="res://addons/ChartGraph/graph-plot-white.png"
+dest_files=[ "res://.import/graph-plot-white.png-6f00476f60ac6a862f4ec7e6910136fe.stex" ]
 
 [params]
 

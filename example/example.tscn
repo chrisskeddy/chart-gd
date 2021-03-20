@@ -184,6 +184,7 @@ rect_min_size = Vector2( 128, 32 )
 mouse_filter = 1
 size_flags_vertical = 0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+
 [connection signal="pressed" from="group/noLabel" to="chart" method="set_labels" binds= [ 0 ]]
 [connection signal="pressed" from="group/ordinate" to="chart" method="set_labels" binds= [ 1 ]]
 [connection signal="pressed" from="group/absciss" to="chart" method="set_labels" binds= [ 2 ]]
