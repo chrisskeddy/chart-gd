@@ -2,15 +2,21 @@
 
 [ext_resource path="res://addons/ChartGraph/script.gd" type="Script" id=1]
 [ext_resource path="res://addons/ChartGraph/icon.png" type="Texture" id=2]
-[ext_resource path="res://addon_ChartGraph_Examples/decorationGroup.tres" type="ButtonGroup" id=3]
-[ext_resource path="res://addon_ChartGraph_Examples/chartType.tres" type="ButtonGroup" id=4]
-[ext_resource path="res://assets/THSarabunNew.tres" type="DynamicFont" id=5]
+[ext_resource path="res://addons/ChartGraph/assets/fonts/THSarabunNew.tres" type="DynamicFont" id=5]
 [ext_resource path="res://addon_ChartGraph_Examples/example.gd" type="Script" id=6]
+
+[sub_resource type="ButtonGroup" id=1]
+resource_name = "decoration"
+
+[sub_resource type="ButtonGroup" id=2]
 
 [node name="main" type="Control"]
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="chart" type="ReferenceRect" parent="."]
 margin_left = 166.0
@@ -42,7 +48,7 @@ custom_colors/font_color_hover = Color( 0.172549, 0.192157, 0.215686, 1 )
 custom_colors/font_color_pressed = Color( 0.172549, 0.192157, 0.215686, 1 )
 pressed = true
 action_mode = 0
-group = ExtResource( 3 )
+group = SubResource( 1 )
 text = "No label"
 
 [node name="ordinate" type="CheckBox" parent="group"]
@@ -53,7 +59,7 @@ custom_colors/font_color = Color( 0.172549, 0.192157, 0.215686, 1 )
 custom_colors/font_color_hover = Color( 0.172549, 0.192157, 0.215686, 1 )
 custom_colors/font_color_pressed = Color( 0.172549, 0.192157, 0.215686, 1 )
 action_mode = 0
-group = ExtResource( 3 )
+group = SubResource( 1 )
 text = "Ordinates labels"
 
 [node name="absciss" type="CheckBox" parent="group"]
@@ -64,7 +70,7 @@ custom_colors/font_color = Color( 0.172549, 0.192157, 0.215686, 1 )
 custom_colors/font_color_hover = Color( 0.172549, 0.192157, 0.215686, 1 )
 custom_colors/font_color_pressed = Color( 0.172549, 0.192157, 0.215686, 1 )
 action_mode = 0
-group = ExtResource( 3 )
+group = SubResource( 1 )
 text = "Abscisses labels"
 
 [node name="legend" type="CheckBox" parent="group"]
@@ -75,7 +81,7 @@ custom_colors/font_color = Color( 0.172549, 0.192157, 0.215686, 1 )
 custom_colors/font_color_hover = Color( 0.172549, 0.192157, 0.215686, 1 )
 custom_colors/font_color_pressed = Color( 0.172549, 0.192157, 0.215686, 1 )
 action_mode = 0
-group = ExtResource( 3 )
+group = SubResource( 1 )
 text = "Legend labels"
 
 [node name="all" type="CheckBox" parent="group"]
@@ -86,7 +92,7 @@ custom_colors/font_color = Color( 0.172549, 0.192157, 0.215686, 1 )
 custom_colors/font_color_hover = Color( 0.172549, 0.192157, 0.215686, 1 )
 custom_colors/font_color_pressed = Color( 0.172549, 0.192157, 0.215686, 1 )
 action_mode = 0
-group = ExtResource( 3 )
+group = SubResource( 1 )
 text = "All labels"
 
 [node name="split" type="ColorRect" parent="."]
@@ -114,7 +120,7 @@ custom_colors/font_color_hover = Color( 0.172549, 0.192157, 0.215686, 1 )
 custom_colors/font_color_pressed = Color( 0.172549, 0.192157, 0.215686, 1 )
 pressed = true
 action_mode = 0
-group = ExtResource( 4 )
+group = SubResource( 2 )
 text = "Line chart"
 
 [node name="pie" type="CheckBox" parent="groupType"]
@@ -125,7 +131,7 @@ custom_colors/font_color = Color( 0.172549, 0.192157, 0.215686, 1 )
 custom_colors/font_color_hover = Color( 0.172549, 0.192157, 0.215686, 1 )
 custom_colors/font_color_pressed = Color( 0.172549, 0.192157, 0.215686, 1 )
 action_mode = 0
-group = ExtResource( 4 )
+group = SubResource( 2 )
 text = "Pie chart"
 
 [node name="container" type="VBoxContainer" parent="."]
