@@ -1,4 +1,4 @@
-# chart-gd
+# ChartGraph
 
 Designed for creating charts in Godot 3.2
 
