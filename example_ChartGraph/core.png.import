@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/core.png-1ab5ccd40a0940742ebac5eed20c0de6.stex"
+path="res://.import/core.png-586b4459e11564216146a513e1c025d5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addon_ChartGraph_Examples/core.png"
-dest_files=[ "res://.import/core.png-1ab5ccd40a0940742ebac5eed20c0de6.stex" ]
+source_file="res://example_ChartGraph/core.png"
+dest_files=[ "res://.import/core.png-586b4459e11564216146a513e1c025d5.stex" ]
 
 [params]
 
