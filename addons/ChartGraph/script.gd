@@ -132,6 +132,7 @@ func initialize(show_label, points_color = {}, animation_duration = 1.0):
 		}
 
 func set_labels(show_label):
+	print(show_label)
 	current_show_label = show_label
 
 	# Reset values
