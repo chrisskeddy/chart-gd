@@ -25,7 +25,7 @@ onready var global_scale = Vector2(1.0, 1.0) / sqrt(MAX_VALUES)
 
 func clean_chart():
 	# If there is too many points, remove old ones
-	while current_data.size() >= MAX_VALUES:
+	while current_data.size() > MAX_VALUES:
 		var point_to_remove = current_data[0]
 
 		if point_to_remove.has('sprites'):

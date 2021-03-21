@@ -187,6 +187,7 @@ func _on_mouse_out(label_type):
 
 func set_max_values(max_values):
 	MAX_VALUES = max_values
+	print("call set max val")
 	_update_scale()
 	clean_chart()
 
