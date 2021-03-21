@@ -1,4 +1,4 @@
-extends Object
+extends Node
 
 enum LABELS_TO_SHOW {
 	NO_LABEL = 0,

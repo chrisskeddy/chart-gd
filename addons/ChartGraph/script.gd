@@ -370,7 +370,6 @@ func _draw_labels():
 
 func compute_y(value):
 	var amplitude = max_value - min_value
-
 	return ((value - min_value) / amplitude) * (max_y - texture_size.y)
 
 func compute_sprites(points_data):
