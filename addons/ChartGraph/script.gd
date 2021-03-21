@@ -17,7 +17,6 @@ var min_value = 0.0
 var max_value = 1.0
 var current_animation_duration = 1.0
 var current_point_color = {}
-var current_show_label = LABELS_TO_SHOW.NO_LABEL
 var current_mouse_over = null
 
 
@@ -28,11 +27,6 @@ var pie_chart_current_data = PieChartData.new()
 var tooltip_data = null
 
 onready var texture_size = dot_texture.get_size()
-onready var min_x = 0.0
-onready var max_x = get_size().x
-
-onready var min_y = 0.0
-onready var max_y = get_size().y
 
 
 onready var interline_color = Color(grid_color.r, grid_color.g, grid_color.b, grid_color.a * 0.5)
@@ -72,13 +66,12 @@ class PieChartData:
 	func get_property_list():
 		return data.keys()
 
-func _init():
-	add_child(tween_node)
+#func _init():
+#	add_child(tween_node)
 
 func _ready():
-	tween_node.set_active(true)
-	tween_node.start()
 	pie_chart_current_data.hovered_radius_ratio = hovered_radius_ratio
+	print("ready")
 
 func set_chart_type(value):
 	if chart_type != value:
@@ -187,7 +180,6 @@ func _on_mouse_out(label_type):
 
 func set_max_values(max_values):
 	MAX_VALUES = max_values
-	print("call set max val")
 	_update_scale()
 	clean_chart()
 
@@ -476,14 +468,11 @@ func create_new_point(point_data):
 func _move_other_sprites(points_data, index):
 	if chart_type == CHART_TYPE.LINE_CHART:
 		for key in points_data.sprites:
-			var point_data = points_data.sprites[key]
 			var delay = sqrt(index) / 10.0
-			var sprite = point_data.sprite
-			var value = point_data.value
-			var y = min_y + max_y - compute_y(value)
+			var y = min_y + max_y - compute_y(points_data.sprites[key].value)
 			var x = min_x + (max_x / max(1.0, max(0, current_data.size() - 1))) * index
 
-			animation_move_dot(sprite, Vector2(x, y) - texture_size * global_scale / 2.0, global_scale, delay)
+			animation_move_dot(points_data.sprites[key].sprite, Vector2(x, y) - texture_size * global_scale / 2.0, global_scale, delay)
 	elif chart_type == CHART_TYPE.PIE_CHART:
 		var sub_index = 0
 
@@ -522,20 +511,6 @@ func _update_draw(object = null):
 	update()
 
 
-
-func format(number, format_text_custom = '%.2f %s'):
-	var unit_index = 0
-	var format_text = '%d %s'
-	var ratio = 1
-
-	for index in range(0, units.size()):
-		var computed_ratio = pow(range_factor, index)
-		if abs(number) > computed_ratio:
-			ratio = computed_ratio
-			unit_index = index
-			if index > 0:
-				format_text = format_text_custom
-	return format_text % [(number / ratio), units[unit_index]]
 
 func compute_ordinate_values(max_value, min_value):
 	var amplitude = max_value - min_value
