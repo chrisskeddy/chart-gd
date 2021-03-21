@@ -22,9 +22,7 @@ func _on_Timer_timeout():
 	chart_graph.create_new_point({
 		label = String(x),
 		values = {
-		  depenses = rng.randi_range(-50,50),
-		  recettes = rng.randi_range(-50,50),
-		  interet = rng.randi_range(-50,50)
+		  recettes = rng.randi_range(-50,50)
 		}
 	})
 	x = x + 1

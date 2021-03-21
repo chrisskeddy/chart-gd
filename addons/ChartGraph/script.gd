@@ -12,6 +12,7 @@ export(float, 0.0, 1.0, 0.01) var chart_background_opacity = 0.334
 var min_value = 0.0
 var max_value = 1.0
 var current_animation_duration = 1.0
+var end_point_position = Vector2.ZERO
 
 var pie_chart_current_data = PieChartData.new()
 
@@ -132,7 +133,6 @@ func initialize(show_label, points_color = {}, animation_duration = 1.0):
 		}
 
 func set_labels(show_label):
-	print(show_label)
 	current_show_label = show_label
 
 	# Reset values
@@ -309,7 +309,7 @@ func draw_line_chart():
 
 			draw_string(label_font, Vector2(point.x, vertical_line[1].y) - string_decal, label, grid_color)
 	
-	_draw_chart_background(pointListObject)
+#	_draw_chart_background(pointListObject)
 
 	if current_show_label & LABELS_TO_SHOW.Y_LABEL:
 		var ordinate_values = compute_ordinate_values(max_value, min_value)
@@ -336,6 +336,8 @@ func compute_sprites(points_data):
 		var sprite = TextureRect.new()
 
 		var initial_pos = Vector2(max_x, max_y)
+		if end_point_position != Vector2.ZERO:
+			initial_pos = end_point_position
 
 		sprite.set_position(initial_pos)
 
@@ -344,8 +346,8 @@ func compute_sprites(points_data):
 
 		add_child(sprite)
 
-		var end_pos = initial_pos - Vector2(-min_x, compute_y(value) - min_y)
-
+		var end_pos = Vector2(max_x, max_y) - Vector2(-min_x, compute_y(value) - min_y)
+		end_point_position=end_pos
 		sprite.mouse_filter = MOUSE_FILTER_STOP
 		sprite.set_tooltip('%s: %s' % [tr(key), format(value)])
 
@@ -398,6 +400,7 @@ func create_new_point(point_data):
 	clean_chart()
 
 	if chart_type == CHART_TYPE.LINE_CHART:
+
 		_compute_max_value(point_data)
 
 		# Move others current_data
