@@ -187,7 +187,6 @@ func _on_mouse_out(label_type):
 
 func set_max_values(max_values):
 	MAX_VALUES = max_values
-
 	_update_scale()
 	clean_chart()
 
@@ -469,6 +468,8 @@ func create_new_point(point_data):
 		move_other_sprites()
 
 	_update_scale()
+	move_other_sprites()
+	update()
 	tween_node.start()
 
 func _move_other_sprites(points_data, index):
