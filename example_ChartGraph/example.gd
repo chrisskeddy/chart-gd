@@ -105,7 +105,7 @@ func reset():
 	label = 'OCTOBRE',
 	values = {
 	  depenses = 350,
-	  recettes = 1750,
+	  recettes = 2750,
 	  interet = -750
 	}
   })

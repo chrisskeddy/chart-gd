@@ -22,7 +22,7 @@ __meta__ = {
 margin_left = 166.0
 margin_top = 120.0
 margin_right = 938.0
-margin_bottom = 327.0
+margin_bottom = 563.0
 rect_min_size = Vector2( 256, 128 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -196,10 +196,10 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 [connection signal="pressed" from="group/absciss" to="chart" method="set_labels" binds= [ 2 ]]
 [connection signal="pressed" from="group/legend" to="chart" method="set_labels" binds= [ 4 ]]
 [connection signal="pressed" from="group/all" to="chart" method="set_labels" binds= [ 7 ]]
-[connection signal="pressed" from="groupType/line" to="chart" method="set_chart_type" binds= [ 0 ]]
 [connection signal="pressed" from="groupType/line" to="." method="reset" flags=3]
-[connection signal="pressed" from="groupType/pie" to="chart" method="set_chart_type" binds= [ 1 ]]
+[connection signal="pressed" from="groupType/line" to="chart" method="set_chart_type" binds= [ 0 ]]
 [connection signal="pressed" from="groupType/pie" to="." method="reset" flags=3]
+[connection signal="pressed" from="groupType/pie" to="chart" method="set_chart_type" binds= [ 1 ]]
 [connection signal="pressed" from="container/controls/clear" to="chart" method="clear_chart"]
 [connection signal="pressed" from="container/controls/add_data" to="." method="reset"]
 [connection signal="value_changed" from="container/maxValues" to="chart" method="set_max_values"]

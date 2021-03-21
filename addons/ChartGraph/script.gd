@@ -1,17 +1,17 @@
 tool
-extends ReferenceRect
+extends CGChart
 
-enum LABELS_TO_SHOW {
-	NO_LABEL = 0,
-	X_LABEL = 1,
-	Y_LABEL = 2,
-	LEGEND_LABEL = 4
-}
-
-enum CHART_TYPE {
-	LINE_CHART,
-	PIE_CHART
-}
+#enum LABELS_TO_SHOW {
+#	NO_LABEL = 0,
+#	X_LABEL = 1,
+#	Y_LABEL = 2,
+#	LEGEND_LABEL = 4
+#}
+#
+#enum CHART_TYPE {
+#	LINE_CHART,
+#	PIE_CHART
+#}
 
 const COLOR_LINE_RATIO = 0.5
 const LABEL_SPACE = Vector2(64.0, 32.0)
@@ -237,7 +237,7 @@ func draw_circle_arc_poly(center, radius, angle_from, angle_to, color):
 func _draw():
 	if chart_type == CHART_TYPE.LINE_CHART:
 		draw_line_chart()
-	else:
+	elif chart_type == CHART_TYPE.PIE_CHART:
 		draw_pie_chart()
 
 	_draw_labels()
@@ -494,12 +494,11 @@ func create_new_point(point_data):
 		# Move others current_data
 		move_other_sprites()
 
-		# Sauvegarde le sprite courant
 		current_data.push_back({
 			label = point_data.label,
 			sprites = compute_sprites(point_data)
 		})
-	else:
+	elif chart_type == CHART_TYPE.PIE_CHART:
 		if current_data.empty():
 			var data = {}
 
@@ -534,7 +533,7 @@ func _move_other_sprites(points_data, index):
 			var x = min_x + (max_x / max(1.0, current_data_size)) * index
 
 			animation_move_dot(sprite, Vector2(x, y) - texture_size * global_scale / 2.0, global_scale, delay)
-	else:
+	elif chart_type == CHART_TYPE.PIE_CHART:
 		var sub_index = 0
 
 		for item_key in points_data.keys():
