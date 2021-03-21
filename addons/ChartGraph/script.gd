@@ -98,7 +98,6 @@ func _init():
 func _ready():
 	tween_node.set_active(true)
 	tween_node.start()
-	set_process_input(chart_type == CHART_TYPE.PIE_CHART)
 	pie_chart_current_data.hovered_radius_ratio = hovered_radius_ratio
 
 func set_chart_type(value):
@@ -106,7 +105,6 @@ func set_chart_type(value):
 		clear_chart()
 		chart_type = value
 		update_tooltip()
-		set_process_input(chart_type == CHART_TYPE.PIE_CHART)
 		update()
 		tween_node.start()
 
