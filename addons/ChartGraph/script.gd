@@ -34,44 +34,6 @@ var current_point_color = {}
 var current_show_label = LABELS_TO_SHOW.NO_LABEL
 var current_mouse_over = null
 
-class PieChartData:
-	var data
-	var hovered_item = null
-	var hovered_radius_ratio = 1.1
-
-	func _init():
-		data = {}
-
-	func _set(param, value):
-		data[param] = value
-
-		return true
-
-	func _get(param):
-		if not data.has(param):
-			data[param] = 0.0
-
-		return data[param]
-
-	func set_hovered_item(name):
-		hovered_item = name
-
-	func set_radius(param, value):
-		return _set(_format_radius_key(param), value)
-
-	func get_radius(param):
-		var radius_ratio = 1.0
-
-		if param == hovered_item:
-			radius_ratio = hovered_radius_ratio
-
-		return _get(_format_radius_key(param)) * radius_ratio
-
-	func _format_radius_key(param):
-		return '%s_radius' % [param]
-
-	func get_property_list():
-		return data.keys()
 
 var pie_chart_current_data = PieChartData.new()
 
@@ -90,13 +52,52 @@ onready var current_data_size = MAX_VALUES
 onready var global_scale = Vector2(1.0, 1.0) / sqrt(MAX_VALUES)
 onready var interline_color = Color(grid_color.r, grid_color.g, grid_color.b, grid_color.a * 0.5)
 
+# Utilitary functions
+const ordinary_factor = 10
+const range_factor = 1000
+const units = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y']
+
+class PieChartData:
+	var data
+	var hovered_item = null
+	var hovered_radius_ratio = 1.1
+
+	func _init():
+		data = {}
+
+	func _set(param, value):
+		data[param] = value
+		return true
+
+	func _get(param):
+		if not data.has(param):
+			data[param] = 0.0
+		return data[param]
+
+	func set_hovered_item(name):
+		hovered_item = name
+
+	func set_radius(param, value):
+		return _set(_format_radius_key(param), value)
+
+	func get_radius(param):
+		var radius_ratio = 1.0
+		if param == hovered_item:
+			radius_ratio = hovered_radius_ratio
+		return _get(_format_radius_key(param)) * radius_ratio
+
+	func _format_radius_key(param):
+		return '%s_radius' % [param]
+
+	func get_property_list():
+		return data.keys()
+
 func _init():
 	add_child(tween_node)
 
 func _ready():
 	tween_node.set_active(true)
 	tween_node.start()
-
 	set_process_input(chart_type == CHART_TYPE.PIE_CHART)
 	pie_chart_current_data.hovered_radius_ratio = hovered_radius_ratio
 
@@ -106,7 +107,6 @@ func set_chart_type(value):
 		chart_type = value
 		update_tooltip()
 		set_process_input(chart_type == CHART_TYPE.PIE_CHART)
-
 		update()
 		tween_node.start()
 
@@ -148,7 +148,6 @@ func _input(event):
 
 func update_tooltip(data = null):
 	var update_frame = false
-
 	if data != null:
 		if tooltip_data != data:
 			set_tooltip('%s: %.02f%%' % [data.name, data.value])
@@ -156,16 +155,13 @@ func update_tooltip(data = null):
 	elif tooltip_data != null:
 		set_tooltip('')
 		update_frame = true
-
 	tooltip_data = data
-
 	if update_frame:
 		update()
 
 func initialize(show_label, points_color = {}, animation_duration = 1.0):
 	set_labels(show_label)
 	current_animation_duration = animation_duration
-
 	for key in points_color:
 		current_point_color[key] = {
 			dot = points_color[key],
@@ -575,10 +571,7 @@ func animation_move_arcpolygon(key_value, end_value, delay = 0.0, duration = 0.6
 func _update_draw(object = null):
 	update()
 
-# Utilitary functions
-const ordinary_factor = 10
-const range_factor = 1000
-const units = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y']
+
 
 func format(number, format_text_custom = '%.2f %s'):
 	var unit_index = 0
@@ -587,14 +580,11 @@ func format(number, format_text_custom = '%.2f %s'):
 
 	for index in range(0, units.size()):
 		var computed_ratio = pow(range_factor, index)
-
 		if abs(number) > computed_ratio:
 			ratio = computed_ratio
 			unit_index = index
-
 			if index > 0:
 				format_text = format_text_custom
-
 	return format_text % [(number / ratio), units[unit_index]]
 
 func compute_ordinate_values(max_value, min_value):
