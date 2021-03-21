@@ -1,3 +1,4 @@
+extends Object
 
 enum LABELS_TO_SHOW {
 	NO_LABEL = 0,
