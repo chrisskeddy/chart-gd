@@ -1,23 +1,10 @@
 tool
 extends CGChart
 
-#enum LABELS_TO_SHOW {
-#	NO_LABEL = 0,
-#	X_LABEL = 1,
-#	Y_LABEL = 2,
-#	LEGEND_LABEL = 4
-#}
-#
-#enum CHART_TYPE {
-#	LINE_CHART,
-#	PIE_CHART
-#}
-
 const COLOR_LINE_RATIO = 0.5
 const LABEL_SPACE = Vector2(64.0, 32.0)
 
 export(Font) var label_font
-export(int, 6, 24) var MAX_VALUES = 12
 export(Texture) var dot_texture = preload('graph-plot-white.png')
 export(Color) var default_chart_color = Color('#ccffffff')
 export(Color) var grid_color = Color('#b111171c')
@@ -26,7 +13,6 @@ export var line_width = 2.0
 export(float, 1.0, 2.0, 0.1) var hovered_radius_ratio = 1.1
 export(float, 0.0, 1.0, 0.01) var chart_background_opacity = 0.334
 
-var current_data = []
 var min_value = 0.0
 var max_value = 1.0
 var current_animation_duration = 1.0
@@ -48,8 +34,7 @@ onready var max_x = get_size().x
 onready var min_y = 0.0
 onready var max_y = get_size().y
 
-onready var current_data_size = MAX_VALUES
-onready var global_scale = Vector2(1.0, 1.0) / sqrt(MAX_VALUES)
+
 onready var interline_color = Color(grid_color.r, grid_color.g, grid_color.b, grid_color.a * 0.5)
 
 # Utilitary functions
@@ -190,9 +175,7 @@ func set_labels(show_label):
 		min_y += LABEL_SPACE.y
 		max_y -= min_y
 
-	current_data_size = max(0, current_data_size - 1)
 	move_other_sprites()
-	current_data_size = current_data.size()
 	update()
 	tween_node.start() 
 
@@ -213,9 +196,7 @@ func set_max_values(max_values):
 	_update_scale()
 	clean_chart()
 
-	current_data_size = max(0, current_data_size - 1)
 	move_other_sprites()
-	current_data_size = current_data.size()
 	tween_node.start()
 
 func draw_circle_arc_poly(center, radius, angle_from, angle_to, color):
@@ -398,19 +379,15 @@ func compute_sprites(points_data):
 	for key in points_data.values:
 		var value = points_data.values[key]
 
-		# Création d'un Sprite
 		var sprite = TextureRect.new()
 
-		# Positionne le Sprite
 		var initial_pos = Vector2(max_x, max_y)
 
 		sprite.set_position(initial_pos)
 
-		# Attache une texture a ce node
 		sprite.set_texture(dot_texture)
 		sprite.set_modulate(current_point_color[key].dot)
 
-		# Attacher le sprite à la scène courante
 		add_child(sprite)
 
 		var end_pos = initial_pos - Vector2(-min_x, compute_y(value) - min_y)
@@ -421,7 +398,6 @@ func compute_sprites(points_data):
 		sprite.connect('mouse_entered', self, '_on_mouse_over', [key])
 		sprite.connect('mouse_exited', self, '_on_mouse_out', [key])
 
-		# Appliquer le déplacement
 		animation_move_dot(sprite, end_pos - texture_size * global_scale / 2.0, global_scale, 0.0, current_animation_duration)
 
 		sprites[key] = {
@@ -447,19 +423,6 @@ func _compute_max_value(point_data):
 					default_chart_color.a * COLOR_LINE_RATIO)
 			}
 
-func clean_chart():
-	# If there is too many points, remove old ones
-	while current_data.size() >= MAX_VALUES:
-		var point_to_remove = current_data[0]
-
-		if point_to_remove.has('sprites'):
-			for key in point_to_remove.sprites:
-				var sprite = point_to_remove.sprites[key]
-
-				sprite.sprite.queue_free()
-
-		current_data.remove(0)
-		_update_scale()
 
 func _stop_tween():
 	# Reset current tween
@@ -516,10 +479,6 @@ func create_new_point(point_data):
 	_update_scale()
 	tween_node.start()
 
-func _update_scale():
-	current_data_size = current_data.size()
-	global_scale = Vector2(1.0, 1.0) / sqrt(min(5, current_data_size))
-
 func _move_other_sprites(points_data, index):
 	if chart_type == CHART_TYPE.LINE_CHART:
 		for key in points_data.sprites:
@@ -528,7 +487,7 @@ func _move_other_sprites(points_data, index):
 			var sprite = point_data.sprite
 			var value = point_data.value
 			var y = min_y + max_y - compute_y(value)
-			var x = min_x + (max_x / max(1.0, current_data_size)) * index
+			var x = min_x + (max_x / max(1.0, max(0, current_data.size() - 1))) * index
 
 			animation_move_dot(sprite, Vector2(x, y) - texture_size * global_scale / 2.0, global_scale, delay)
 	elif chart_type == CHART_TYPE.PIE_CHART:

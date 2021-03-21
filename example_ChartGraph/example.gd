@@ -17,7 +17,7 @@ func _ready():
 
 func _process(_delta):
   fps_label.set_text('FPS: %02d' % [Engine.get_frames_per_second()])
-  points_label.set_text('NB POINTS: %d' % [chart_node.current_data_size * 3.0])
+  points_label.set_text('NB POINTS: %d' % [chart_node.current_data.size() * 3.0])
 
 func reset():
   chart_node.create_new_point({
