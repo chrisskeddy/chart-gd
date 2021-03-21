@@ -24,7 +24,7 @@ var current_mouse_over = null
 var pie_chart_current_data = PieChartData.new()
 
 # Node create in the initializion phase
-var tween_node = Tween.new()
+
 var tooltip_data = null
 
 onready var texture_size = dot_texture.get_size()
@@ -370,6 +370,7 @@ func _draw_labels():
 
 func compute_y(value):
 	var amplitude = max_value - min_value
+
 	return ((value - min_value) / amplitude) * (max_y - texture_size.y)
 
 func compute_sprites(points_data):
@@ -423,10 +424,7 @@ func _compute_max_value(point_data):
 			}
 
 
-func _stop_tween():
-	# Reset current tween
-	tween_node.remove_all()
-	tween_node.stop_all()
+
 
 func clear_chart():
 	_stop_tween()

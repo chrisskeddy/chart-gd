@@ -14,8 +14,10 @@ enum CHART_TYPE {
 }
 
 var current_data = []
+var tween_node = Tween.new()
 export(int, 6, 24) var MAX_VALUES = 12
 onready var global_scale = Vector2(1.0, 1.0) / sqrt(MAX_VALUES)
+
 func clean_chart():
 	# If there is too many points, remove old ones
 	while current_data.size() >= MAX_VALUES:
@@ -33,3 +35,8 @@ func clean_chart():
 func _update_scale():
 #	current_data_size = current_data.size()
 	global_scale = Vector2(1.0, 1.0) / sqrt(min(5, current_data.size()))
+
+func _stop_tween():
+#	Reset current tween
+	tween_node.remove_all()
+	tween_node.stop_all()
