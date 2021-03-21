@@ -12,6 +12,11 @@ enum CHART_TYPE {
 	LINE_CHART,
 	PIE_CHART
 }
+# Utilitary functions
+const ordinary_factor = 10
+const range_factor = 1000
+const units = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y']
+
 
 var current_data = []
 var tween_node = Tween.new()

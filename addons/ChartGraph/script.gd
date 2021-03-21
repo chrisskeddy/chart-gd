@@ -37,11 +37,6 @@ onready var max_y = get_size().y
 
 onready var interline_color = Color(grid_color.r, grid_color.g, grid_color.b, grid_color.a * 0.5)
 
-# Utilitary functions
-const ordinary_factor = 10
-const range_factor = 1000
-const units = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y']
-
 class PieChartData:
 	var data
 	var hovered_item = null
