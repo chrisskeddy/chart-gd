@@ -17,11 +17,11 @@ func _ready():
 
 func _process(_delta):
   fps_label.set_text('FPS: %02d' % [Engine.get_frames_per_second()])
-  points_label.set_text('NB POINTS: %d' % [chart_node.current_data_size * 3.0])
+  points_label.set_text('NB POINTS: %d' % [chart_node.current_data.size() * 3.0])
 
 func reset():
   chart_node.create_new_point({
-	label = 'JANVIER',
+	label = 'January',
 	values = {
 	  depenses = 150,
 	  recettes = 1025,
@@ -30,7 +30,7 @@ func reset():
   })
 
   chart_node.create_new_point({
-	label = 'FEVRIER',
+	label = 'February',
 	values = {
 	  depenses = 500,
 	  recettes = 1020,
@@ -39,7 +39,7 @@ func reset():
   })
 
   chart_node.create_new_point({
-	label = 'MARS',
+	label = 'March',
 	values = {
 	  depenses = 10,
 	  recettes = 1575,
@@ -48,7 +48,7 @@ func reset():
   })
 
   chart_node.create_new_point({
-	label = 'AVRIL',
+	label = 'April',
 	values = {
 	  depenses = 350,
 	  recettes = 750,
@@ -57,7 +57,7 @@ func reset():
   })
 
   chart_node.create_new_point({
-	label = 'MAI',
+	label = 'May',
 	values = {
 	  depenses = 1350,
 	  recettes = 750,
@@ -66,7 +66,7 @@ func reset():
   })
 
   chart_node.create_new_point({
-	label = 'JUIN',
+	label = 'June',
 	values = {
 	  depenses = 350,
 	  recettes = 1750,
@@ -75,7 +75,7 @@ func reset():
   })
 
   chart_node.create_new_point({
-	label = 'JUILLET',
+	label = 'July',
 	values = {
 	  depenses = 100,
 	  recettes = 1500,
@@ -84,7 +84,7 @@ func reset():
   })
 
   chart_node.create_new_point({
-	label = 'AOUT',
+	label = 'August',
 	values = {
 	  depenses = 350,
 	  recettes = 750,
@@ -93,7 +93,7 @@ func reset():
   })
 
   chart_node.create_new_point({
-	label = 'SEPTEMBRE',
+	label = 'September',
 	values = {
 	  depenses = 1350,
 	  recettes = 750,
@@ -102,16 +102,16 @@ func reset():
   })
 
   chart_node.create_new_point({
-	label = 'OCTOBRE',
+	label = 'October',
 	values = {
 	  depenses = 350,
-	  recettes = 1750,
+	  recettes = 2750,
 	  interet = -750
 	}
   })
 
   chart_node.create_new_point({
-	label = 'NOVEMBRE',
+	label = 'November',
 	values = {
 	  depenses = 450,
 	  recettes = 200,
@@ -120,7 +120,7 @@ func reset():
   })
 
   chart_node.create_new_point({
-	label = 'DECEMBRE',
+	label = 'December',
 	values = {
 	  depenses = 1350,
 	  recettes = 500,

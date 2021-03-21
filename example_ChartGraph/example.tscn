@@ -40,6 +40,9 @@ margin_left = 27.1008
 margin_top = 117.857
 margin_right = 27.1008
 margin_bottom = 117.857
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="noLabel" type="CheckBox" parent="group"]
 margin_right = 132.0
