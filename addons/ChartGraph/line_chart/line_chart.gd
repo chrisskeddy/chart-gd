@@ -5,6 +5,14 @@ class_name CGChartLine
 var min_y_value = 0.0
 var max_y_value = 1.0
 
+export(Color) var grid_color = Color('#b111171c')
+export(Texture) var dot_texture = preload("res://addons/ChartGraph/graph-plot-white.png")
+
+func compute_y(value):
+	var amplitude = max_y_value - min_y_value
+
+	return ((value - min_y_value) / amplitude) * (max_y - dot_texture.size().y)
+
 func draw_line_chart():
 	var vertical_line = [Vector2(min_x, min_y), Vector2(min_x, min_y + max_y)]
 	var horizontal_line = [vertical_line[1], Vector2(min_x + max_x, min_y + max_y)]

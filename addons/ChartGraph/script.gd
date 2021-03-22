@@ -1,7 +1,7 @@
 tool
 extends CGChart
 
-export(Texture) var dot_texture = preload('graph-plot-white.png')
+export(Texture) var dot_texture = preload("res://addons/ChartGraph/graph-plot-white.png")
 export(Color) var default_chart_color = Color('#ccffffff')
 export(Color) var grid_color = Color('#b111171c')
 export(int, 'Line', 'Pie') var chart_type = CHART_TYPE.LINE_CHART setget set_chart_type
