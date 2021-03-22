@@ -2,13 +2,16 @@ tool
 extends CGChart
 class_name CGChartLine
 
+var min_y_value = 0.0
+var max_y_value = 1.0
+
 func draw_line_chart():
 	var vertical_line = [Vector2(min_x, min_y), Vector2(min_x, min_y + max_y)]
 	var horizontal_line = [vertical_line[1], Vector2(min_x + max_x, min_y + max_y)]
 	var previous_point = {}
 
 	# Need to draw the 0 ordinate line
-	if min_value < 0:
+	if min_y_value < 0:
 		horizontal_line[0].y = min_y + max_y - compute_y(0.0)
 		horizontal_line[1].y = min_y + max_y - compute_y(0.0)
 
@@ -66,10 +69,10 @@ func draw_line_chart():
 
 			draw_string(label_font, Vector2(point.x, vertical_line[1].y) - string_decal, label, grid_color)
 	
-	_draw_chart_background(pointListObject)
+#	_draw_chart_background(pointListObject)
 
 	if current_show_label & LABELS_TO_SHOW.Y_LABEL:
-		var ordinate_values = compute_ordinate_values(max_value, min_value)
+		var ordinate_values = compute_ordinate_values(max_y_value, min_y_value)
 
 		for ordinate_value in ordinate_values:
 			var label = format(ordinate_value)

@@ -24,10 +24,11 @@ var current_point_color = {}
 var current_show_label = LABELS_TO_SHOW.NO_LABEL
 var current_data = []
 var tween_node = Tween.new()
-export(int, 6, 24) var MAX_VALUES = 12
+export(int) var limit_x_count = 12
+#export(int) var MAX_VALUES = 12
 export(Font) var label_font
 export(Color) var font_color = Color('#b111171c')
-onready var global_scale = Vector2(1.0, 1.0) / sqrt(MAX_VALUES)
+onready var global_scale = Vector2(1.0, 1.0) / sqrt(limit_x_count)
 onready var min_x = 0.0
 onready var max_x = get_size().x
 
@@ -56,7 +57,7 @@ func _ready():
 
 func clean_chart():
 	# If there is too many points, remove old ones
-	while current_data.size() > MAX_VALUES:
+	while current_data.size() > limit_x_count:
 		var point_to_remove = current_data[0]
 
 		if point_to_remove.has('sprites'):
@@ -108,7 +109,6 @@ func _draw_labels():
 					dot_color.g,
 					dot_color.b,
 					dot_color.a * COLOR_LINE_RATIO)
-
 			draw_string(label_font, label_position, tr(legend_label), font_color)
 			draw_rect(rect, dot_color)
 

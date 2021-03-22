@@ -23,7 +23,7 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-MAX_VALUES = 10
+limit_x_count = 10
 label_font = ExtResource( 2 )
 line_width = 4.0
 hovered_radius_ratio = 1.5

@@ -9,8 +9,8 @@ export var line_width = 2.0
 export(float, 1.0, 2.0, 0.1) var hovered_radius_ratio = 1.1
 export(float, 0.0, 1.0, 0.01) var chart_background_opacity = 0.334
 
-var min_value = 0.0
-var max_value = 1.0
+var min_y_value = 0.0
+var max_y_value = 1.0
 var current_animation_duration = 1.0
 var end_point_position = Vector2.ZERO
 
@@ -167,8 +167,8 @@ func _on_mouse_out(label_type):
 
 		update()
 
-func set_max_values(max_values):
-	MAX_VALUES = max_values
+func set_max_y_values(value):
+	limit_x_count = value
 	_update_scale()
 	clean_chart()
 
@@ -251,7 +251,8 @@ func draw_line_chart():
 	var previous_point = {}
 
 	# Need to draw the 0 ordinate line
-	if min_value < 0:
+	if min_y_value < 0:
+		print("hit this")
 		horizontal_line[0].y = min_y + max_y - compute_y(0.0)
 		horizontal_line[1].y = min_y + max_y - compute_y(0.0)
 
@@ -312,7 +313,7 @@ func draw_line_chart():
 #	_draw_chart_background(pointListObject)
 
 	if current_show_label & LABELS_TO_SHOW.Y_LABEL:
-		var ordinate_values = compute_ordinate_values(max_value, min_value)
+		var ordinate_values = compute_ordinate_values(max_y_value, min_y_value)
 
 		for ordinate_value in ordinate_values:
 			var label = format(ordinate_value)
@@ -323,9 +324,9 @@ func draw_line_chart():
 	draw_line(horizontal_line[0], horizontal_line[1], grid_color, 1.0)
 
 func compute_y(value):
-	var amplitude = max_value - min_value
+	var amplitude = max_y_value - min_y_value
 
-	return ((value - min_value) / amplitude) * (max_y - texture_size.y)
+	return ((value - min_y_value) / amplitude) * (max_y - texture_size.y)
 
 func compute_sprites(points_data):
 	var sprites = {}
@@ -363,11 +364,11 @@ func compute_sprites(points_data):
 
 	return sprites
 
-func _compute_max_value(point_data):
+func _compute_max_y_value(point_data):
 	# Being able to manage multiple points dynamically
 	for key in point_data.values:
-		max_value = max(point_data.values[key], max_value)
-		min_value = min(point_data.values[key], min_value)
+		max_y_value = max(point_data.values[key], max_y_value)
+		min_y_value = min(point_data.values[key], min_y_value)
 
 		# Set default color
 		if not current_point_color.has(key):
@@ -381,8 +382,8 @@ func _compute_max_value(point_data):
 
 func clear_chart():
 	_stop_tween()
-	max_value = 1.0
-	min_value = 0.0
+	max_y_value = 1.0
+	min_y_value = 0.0
 
 	for point_to_remove in current_data:
 		if point_to_remove.has('sprites'):
@@ -401,7 +402,7 @@ func create_new_point(point_data):
 
 	if chart_type == CHART_TYPE.LINE_CHART:
 
-		_compute_max_value(point_data)
+		_compute_max_y_value(point_data)
 
 		# Move others current_data
 		move_other_sprites()
@@ -477,8 +478,8 @@ func animation_move_arcpolygon(key_value, end_value, delay = 0.0, duration = 0.6
 func _update_draw(object = null):
 	update()
 
-func compute_ordinate_values(max_value, min_value):
-	var amplitude = max_value - min_value
+func compute_ordinate_values(max_y_value, min_y_value):
+	var amplitude = max_y_value - min_y_value
 	var ordinate_values = [-10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10]
 	var result = []
 	var ratio = 1
@@ -495,7 +496,7 @@ func compute_ordinate_values(max_value, min_value):
 
 	# Keep only valid values
 	for value in ordinate_values:
-		if value <= max_value and value >= min_value:
+		if value <= max_y_value and value >= min_y_value:
 			result.push_back(value)
 
 	return result
