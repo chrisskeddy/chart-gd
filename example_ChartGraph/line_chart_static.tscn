@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/ChartGraph/line_chart/line_chart.gd" type="Script" id=1]
+[ext_resource path="res://addons/ChartGraph/assets/fonts/THSarabunNew.tres" type="DynamicFont" id=2]
+[ext_resource path="res://example_ChartGraph/line_chart_static.gd" type="Script" id=3]
+
+[node name="LineChartStatic" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="chart" type="ReferenceRect" parent="."]
+margin_left = 69.2964
+margin_top = 35.3553
+margin_right = 932.296
+margin_bottom = 559.355
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+label_font = ExtResource( 2 )

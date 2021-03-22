@@ -1,7 +1,7 @@
 tool
 extends CGChart
 
-export(Texture) var dot_texture = preload("res://addons/ChartGraph/graph-plot-white.png")
+export(Texture) var dot_texture = preload('graph-plot-white.png')
 export(Color) var default_chart_color = Color('#ccffffff')
 export(Color) var grid_color = Color('#b111171c')
 export(int, 'Line', 'Pie') var chart_type = CHART_TYPE.LINE_CHART setget set_chart_type
@@ -9,16 +9,14 @@ export var line_width = 2.0
 export(float, 1.0, 2.0, 0.1) var hovered_radius_ratio = 1.1
 export(float, 0.0, 1.0, 0.01) var chart_background_opacity = 0.334
 
-var min_y_value = 0.0
-var max_y_value = 1.0
-var current_animation_duration = 1.0
+var min_value = 0.0
+var max_value = 1.0
 var end_point_position = Vector2.ZERO
 
 var pie_chart_current_data = PieChartData.new()
 
 var tooltip_data = null
 
-onready var texture_size = dot_texture.get_size()
 onready var interline_color = Color(grid_color.r, grid_color.g, grid_color.b, grid_color.a * 0.5)
 
 class PieChartData:
@@ -64,12 +62,16 @@ func _ready():
 
 func set_chart_type(value):
 	if chart_type != value:
-		clear_chart()
+		self_clear_chart()
 		chart_type = value
 		update_tooltip()
 		update()
 		tween_node.start()
 
+func self_clear_chart():
+	max_value = 1.0
+	min_value = 0.0
+	clear_chart()
 func _input(event):
 	if event is InputEventMouseMotion:
 		var center_point = get_global_position() + Vector2(min_x + max_x, min_y + max_y) / 2.0
@@ -118,43 +120,43 @@ func update_tooltip(data = null):
 	tooltip_data = data
 	if update_frame:
 		update()
-
-func initialize(show_label, points_color = {}, animation_duration = 1.0):
-	set_labels(show_label)
-	current_animation_duration = animation_duration
-	for key in points_color:
-		current_point_color[key] = {
-			dot = points_color[key],
-			line = Color(
-				points_color[key].r,
-				points_color[key].g,
-				points_color[key].b,
-				points_color[key].a * COLOR_LINE_RATIO)
-		}
-
-func set_labels(show_label):
-	current_show_label = show_label
-
-	# Reset values
-	min_y = 0.0
-	min_x = 0.0
-	max_y = get_size().y
-	max_x = get_size().x
-
-	if current_show_label & LABELS_TO_SHOW.X_LABEL:
-		max_y -= LABEL_SPACE.y
-
-	if current_show_label & LABELS_TO_SHOW.Y_LABEL:
-		min_x += LABEL_SPACE.x
-		max_x -= min_x
-
-	if current_show_label & LABELS_TO_SHOW.LEGEND_LABEL:
-		min_y += LABEL_SPACE.y
-		max_y -= min_y
-
-	move_other_sprites()
-	update()
-	tween_node.start() 
+#
+#func initialize(show_label, points_color = {}, animation_duration = 1.0):
+#	set_labels(show_label)
+#	current_animation_duration = animation_duration
+#	for key in points_color:
+#		current_point_color[key] = {
+#			dot = points_color[key],
+#			line = Color(
+#				points_color[key].r,
+#				points_color[key].g,
+#				points_color[key].b,
+#				points_color[key].a * COLOR_LINE_RATIO)
+#		}
+#
+#func set_labels(show_label):
+#	current_show_label = show_label
+#
+#	# Reset values
+#	min_y = 0.0
+#	min_x = 0.0
+#	max_y = get_size().y
+#	max_x = get_size().x
+#
+#	if current_show_label & LABELS_TO_SHOW.X_LABEL:
+#		max_y -= LABEL_SPACE.y
+#
+#	if current_show_label & LABELS_TO_SHOW.Y_LABEL:
+#		min_x += LABEL_SPACE.x
+#		max_x -= min_x
+#
+#	if current_show_label & LABELS_TO_SHOW.LEGEND_LABEL:
+#		min_y += LABEL_SPACE.y
+#		max_y -= min_y
+#
+#	move_other_sprites()
+#	update()
+#	tween_node.start() 
 
 func _on_mouse_over(label_type):
 	current_mouse_over = label_type
@@ -167,7 +169,7 @@ func _on_mouse_out(label_type):
 
 		update()
 
-func set_max_y_values(value):
+func set_max_values(value):
 	limit_x_count = value
 	_update_scale()
 	clean_chart()
@@ -251,8 +253,7 @@ func draw_line_chart():
 	var previous_point = {}
 
 	# Need to draw the 0 ordinate line
-	if min_y_value < 0:
-		print("hit this")
+	if min_value < 0:
 		horizontal_line[0].y = min_y + max_y - compute_y(0.0)
 		horizontal_line[1].y = min_y + max_y - compute_y(0.0)
 
@@ -273,7 +274,7 @@ func draw_line_chart():
 
 			point_data.sprites[key].sprite.set_modulate(current_dot_color)
 
-			point = point_data.sprites[key].sprite.get_position() + texture_size * global_scale / 2.0
+			point = point_data.sprites[key].sprite.get_position() + dot_texture.get_size() * global_scale / 2.0
 
 			if not pointListObject.has(key):
 				pointListObject[key] = []
@@ -313,7 +314,7 @@ func draw_line_chart():
 #	_draw_chart_background(pointListObject)
 
 	if current_show_label & LABELS_TO_SHOW.Y_LABEL:
-		var ordinate_values = compute_ordinate_values(max_y_value, min_y_value)
+		var ordinate_values = compute_ordinate_values(max_value, min_value)
 
 		for ordinate_value in ordinate_values:
 			var label = format(ordinate_value)
@@ -324,9 +325,9 @@ func draw_line_chart():
 	draw_line(horizontal_line[0], horizontal_line[1], grid_color, 1.0)
 
 func compute_y(value):
-	var amplitude = max_y_value - min_y_value
+	var amplitude = max_value - min_value
 
-	return ((value - min_y_value) / amplitude) * (max_y - texture_size.y)
+	return ((value - min_value) / amplitude) * (max_y - dot_texture.get_size().y)
 
 func compute_sprites(points_data):
 	var sprites = {}
@@ -355,7 +356,7 @@ func compute_sprites(points_data):
 		sprite.connect('mouse_entered', self, '_on_mouse_over', [key])
 		sprite.connect('mouse_exited', self, '_on_mouse_out', [key])
 
-		animation_move_dot(sprite, end_pos - texture_size * global_scale / 2.0, global_scale, 0.0, current_animation_duration)
+		animation_move_dot(sprite, end_pos - dot_texture.get_size() * global_scale / 2.0, global_scale, 0.0, current_animation_duration)
 
 		sprites[key] = {
 			sprite = sprite,
@@ -364,11 +365,11 @@ func compute_sprites(points_data):
 
 	return sprites
 
-func _compute_max_y_value(point_data):
+func _compute_max_value(point_data):
 	# Being able to manage multiple points dynamically
 	for key in point_data.values:
-		max_y_value = max(point_data.values[key], max_y_value)
-		min_y_value = min(point_data.values[key], min_y_value)
+		max_value = max(point_data.values[key], max_value)
+		min_value = min(point_data.values[key], min_value)
 
 		# Set default color
 		if not current_point_color.has(key):
@@ -380,21 +381,7 @@ func _compute_max_y_value(point_data):
 					default_chart_color.a * COLOR_LINE_RATIO)
 			}
 
-func clear_chart():
-	_stop_tween()
-	max_y_value = 1.0
-	min_y_value = 0.0
 
-	for point_to_remove in current_data:
-		if point_to_remove.has('sprites'):
-			for key in point_to_remove.sprites:
-				var sprite = point_to_remove.sprites[key]
-
-				sprite.sprite.queue_free()
-
-	current_data = []
-	_update_scale()
-	update()
 
 func create_new_point(point_data):
 	_stop_tween()
@@ -402,7 +389,7 @@ func create_new_point(point_data):
 
 	if chart_type == CHART_TYPE.LINE_CHART:
 
-		_compute_max_y_value(point_data)
+		_compute_max_value(point_data)
 
 		# Move others current_data
 		move_other_sprites()
@@ -440,7 +427,7 @@ func _move_other_sprites(points_data, index):
 			var y = min_y + max_y - compute_y(points_data.sprites[key].value)
 			var x = min_x + (max_x / max(1.0, max(0, current_data.size() - 1))) * index
 
-			animation_move_dot(points_data.sprites[key].sprite, Vector2(x, y) - texture_size * global_scale / 2.0, global_scale, delay)
+			animation_move_dot(points_data.sprites[key].sprite, Vector2(x, y) - dot_texture.get_size() * global_scale / 2.0, global_scale, delay)
 	elif chart_type == CHART_TYPE.PIE_CHART:
 		var sub_index = 0
 
@@ -478,8 +465,9 @@ func animation_move_arcpolygon(key_value, end_value, delay = 0.0, duration = 0.6
 func _update_draw(object = null):
 	update()
 
-func compute_ordinate_values(max_y_value, min_y_value):
-	var amplitude = max_y_value - min_y_value
+# line chart only
+func compute_ordinate_values(max_value, min_value):
+	var amplitude = max_value - min_value
 	var ordinate_values = [-10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10]
 	var result = []
 	var ratio = 1
@@ -496,7 +484,7 @@ func compute_ordinate_values(max_y_value, min_y_value):
 
 	# Keep only valid values
 	for value in ordinate_values:
-		if value <= max_y_value and value >= min_y_value:
+		if value <= max_value and value >= min_value:
 			result.push_back(value)
 
 	return result
