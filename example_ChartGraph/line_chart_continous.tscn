@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/ChartGraph/line_chart/line_chart.gd" type="Script" id=1]
+[ext_resource path="res://addons/ChartGraph/assets/fonts/Roboto/RobotoRegular.tres" type="DynamicFont" id=2]
+[ext_resource path="res://example_ChartGraph/line_chart_continous.gd" type="Script" id=3]
+
+[node name="line_chart_continous" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="CGLine" type="ReferenceRect" parent="."]
+margin_left = 31.1127
+margin_top = 29.6984
+margin_right = 990.113
+margin_bottom = 554.698
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+limit_x_count = 10
+label_font = ExtResource( 2 )
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
