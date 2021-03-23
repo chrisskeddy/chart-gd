@@ -194,15 +194,23 @@ rect_min_size = Vector2( 128, 32 )
 mouse_filter = 1
 size_flags_vertical = 0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 705.692
+margin_top = 36.7695
+margin_right = 982.692
+margin_bottom = 50.7695
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+text = "This method of using chart will be removed"
 [connection signal="pressed" from="group/noLabel" to="chart" method="set_labels" binds= [ 0 ]]
 [connection signal="pressed" from="group/ordinate" to="chart" method="set_labels" binds= [ 1 ]]
 [connection signal="pressed" from="group/absciss" to="chart" method="set_labels" binds= [ 2 ]]
 [connection signal="pressed" from="group/legend" to="chart" method="set_labels" binds= [ 4 ]]
 [connection signal="pressed" from="group/all" to="chart" method="set_labels" binds= [ 7 ]]
-[connection signal="pressed" from="groupType/line" to="." method="reset" flags=3]
 [connection signal="pressed" from="groupType/line" to="chart" method="set_chart_type" binds= [ 0 ]]
-[connection signal="pressed" from="groupType/pie" to="." method="reset" flags=3]
+[connection signal="pressed" from="groupType/line" to="." method="reset" flags=3]
 [connection signal="pressed" from="groupType/pie" to="chart" method="set_chart_type" binds= [ 1 ]]
+[connection signal="pressed" from="groupType/pie" to="." method="reset" flags=3]
 [connection signal="pressed" from="container/controls/clear" to="chart" method="clear_chart"]
 [connection signal="pressed" from="container/controls/add_data" to="." method="reset"]
 [connection signal="value_changed" from="container/maxValues" to="chart" method="set_max_values"]

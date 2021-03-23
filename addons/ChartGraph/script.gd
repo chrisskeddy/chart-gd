@@ -1,3 +1,4 @@
+#THIS FILE WILL BE REMOVED IN FUTURE
 tool
 extends CGChart
 
